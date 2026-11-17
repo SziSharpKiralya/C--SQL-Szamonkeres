@@ -1,16 +1,21 @@
-﻿namespace C__SQL_Szamonkeres
+﻿using ZstdSharp.Unsafe;
+
+namespace C__SQL_Szamonkeres
 {
     internal class Program
     {
+        static void TesztekFuttatasa(Szornyelemzo methods)
+        {
+
+        }
+
         static void Main(string[] args)
         {
             SzornyAdatbazis db = new SzornyAdatbazis("server=localhost;database=fantasybestariumdb;uid=root;pwd=;");
             List<Szorny> szornyekLista = db.Feltolt();
+            Szornyelemzo methods = new Szornyelemzo(szornyekLista);
 
-            foreach (Szorny szorny in szornyekLista)
-            {
-                Console.WriteLine($"{szorny.Id} {szorny.Nev}");
-            }
+            TesztekFuttatasa(methods);
         }
     }
 }
