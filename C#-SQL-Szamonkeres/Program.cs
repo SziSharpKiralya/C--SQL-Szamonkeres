@@ -4,7 +4,13 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            SzornyAdatbazis db = new SzornyAdatbazis("server=localhost;database=fantasybestariumdb;uid=root;pwd=;");
+            List<Szorny> szornyekLista = db.Feltolt();
+
+            foreach (Szorny szorny in szornyekLista)
+            {
+                Console.WriteLine($"{szorny.Id} {szorny.Nev}");
+            }
         }
     }
 }
