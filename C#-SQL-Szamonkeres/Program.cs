@@ -37,6 +37,41 @@ namespace C__SQL_Szamonkeres
             Console.WriteLine(Math.Round(methods.AtlagosVeszelyesseg(), 2));
 
             Console.ResetColor();
+            Console.Write($"A legveszélyesebb szörnyek nevei: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine();
+
+            foreach (Szorny szorny in methods.LegveszelyesebbSzornyek())
+            {
+                Console.WriteLine($" {szorny.Nev} {szorny.VeszelyessegiSzint}");
+            }
+
+            Console.ResetColor();
+            Console.Write($"A mocsárban élő legalább 5-ös veszélyességű szörnyek: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine();
+
+            foreach (Szorny szorny in methods.MocsariVeszelyesSzornyek())
+            {
+                Console.WriteLine($" {szorny.Nev} {szorny.VeszelyessegiSzint} {szorny.Elohely}");
+            }
+
+            Console.ResetColor();
+            Console.Write($"Van -e olyan szörny, ami 9-es veszélyesség felett van, de gyengesége a tűz: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(methods.VanExtremTuzGyengeSzorny() ? "Igen, van" : "Nem, nincs");
+
+            Console.ResetColor();
+            Console.Write($"Különböző élőhelyek, és hozzájuk tartozó szörnyszámuk: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine();
+
+            foreach (var kiir in methods.SzornyekSzamaElohelyenkent())
+            {
+                Console.WriteLine($" {kiir}");
+            }
+
+            Console.ResetColor();
         }
 
         static void Main(string[] args)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace C__SQL_Szamonkeres
@@ -33,7 +34,8 @@ namespace C__SQL_Szamonkeres
             var eredmenyek = szornyek
                 .GroupBy(szorny => szorny.Elohely)
                 .Select(elohely => elohely.First())
-                .Select(elohely => elohely.Elohely);
+                .Select(elohely => elohely.Elohely)
+                .OrderBy(elohely => elohely);
             return eredmenyek;
         }
 
@@ -45,22 +47,41 @@ namespace C__SQL_Szamonkeres
 
         public IEnumerable<Szorny> LegveszelyesebbSzornyek()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var segito = szornyek
+                .OrderByDescending(szorny => szorny.VeszelyessegiSzint)
+                .Select(szorny => szorny.VeszelyessegiSzint)
+                .FirstOrDefault();
+            var eredmenyek = szornyek
+                .Where(szorny => szorny.VeszelyessegiSzint == segito);
+            return eredmenyek;
         }
 
         public IEnumerable<Szorny> MocsariVeszelyesSzornyek()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var eredmenyek = szornyek
+                .OrderByDescending(szorny => szorny.VeszelyessegiSzint)
+                .Where(szorny => szorny.VeszelyessegiSzint >= 5)
+                .Where(szorny => szorny.Elohely == "Fekete Mocsár");
+            return eredmenyek;
         }
 
         public bool VanExtremTuzGyengeSzorny()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var eredmenyek = szornyek
+                .Where(szorny => szorny.VeszelyessegiSzint > 9)
+                .Any(szorny => szorny.FoGyengeseg == "Tűz" ? true : false);
+            return eredmenyek;
         }
 
-        public IEnumerable<string> SzornyekSzamaElohelyenkent()
+        public Dictionary<string, int> SzornyekSzamaElohelyenkent()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var eredmenyek = szornyek
+                .GroupBy(szorny => szorny.Elohely)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group.Count()
+                );
+            return eredmenyek;
         }
     }
 }
