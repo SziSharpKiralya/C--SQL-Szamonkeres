@@ -16,22 +16,31 @@ namespace C__SQL_Szamonkeres
 
         public int OsszesSzornySzama()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var eredmenyek = szornyek.Count();
+            return eredmenyek;
         }
 
-        public IEnumerable<string> VeszelyesSzornyekNeve()
+        public IEnumerable<string> VeszelyesSzornyekNevei()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var eredmenyek = szornyek
+                .Where(szorny => szorny.VeszelyessegiSzint == 10)
+                .Select(szorny => szorny.Nev);
+            return eredmenyek;
         }
 
         public IEnumerable<string> EgyediElohelyek()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var eredmenyek = szornyek
+                .GroupBy(szorny => szorny.Elohely)
+                .Select(elohely => elohely.First())
+                .Select(elohely => elohely.Elohely);
+            return eredmenyek;
         }
 
         public double AtlagosVeszelyesseg()
         {
-            throw new NotImplementedException("Még nincs kész");
+            var eredmenyek = szornyek.Select(szorny => szorny.VeszelyessegiSzint).Average();
+            return eredmenyek;
         }
 
         public IEnumerable<Szorny> LegveszelyesebbSzornyek()
